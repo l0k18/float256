@@ -5,6 +5,4 @@ This is mainly just convenience wrappers to make working with big.Float easier (
 
 It also has convenience converters to and from big.Int, string, int64 and uint64, and numerous other standard basic math library functions. There is no trigonometric functions as these are (pretty much) never used in financial calculations.
 
-The purpose is for implementing super precise financial calculations.
-
 To make your code a little less wordy you may want to alias the import with a shorter name with or two letters like f, F, or fl or something similar. The return values are plain vanilla `*big.Float` variables so it is possible to use them in the normal `math/big` manner to variables created by assignments from these functions.
