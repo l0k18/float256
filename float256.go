@@ -19,6 +19,51 @@ func New(f float64) *big.Float {
 	return r
 }
 
+// FromString returns a float with 256 bit precision from a string or zero if invalid
+// The reverse conversion is built into big.Float with .String() though it is unnecessary to do this to use with any of the fmt Print* functions
+func FromString(s string) *big.Float {
+	r, _ := Zero().SetString(s)
+	r.SetPrec(256)
+	return r
+}
+
+// Int returns the truncated value of the parameter as a *big.Int
+func Int(a *big.Float) *big.Int {
+	i, _ := a.Int(nil)
+	return i
+}
+
+// FromInt returns a *big.Float from a *big.Int
+func FromInt(i *big.Int) *big.Float {
+	return Zero().SetInt(i)
+}
+
+// Int64 returns the value of the parameter as an int64 with the decimal truncated
+func Int64(a *big.Float) int64 {
+	r := Zero()
+	r.Copy(a)
+	i, _ := r.Int64()
+	return i
+}
+
+// FromInt64 returns a *big.Float from an int64
+func FromInt64(i int64) *big.Float {
+	return Zero().SetInt64(i)
+}
+
+// Uint64 returns the value of the parameter as a uint64 with decimal truncated and sign positive (obviously)
+func Uint64(a *big.Float) uint64 {
+	r := Zero()
+	r.Copy(a)
+	i, _ := r.Uint64()
+	return i
+}
+
+// FromUint64 returns a *big.Float from a uint64
+func FromUint64(i uint64) *big.Float {
+	return Zero().SetUint64(i)
+}
+
 // Equal returns true if x and y are equal
 func Equal(x, y *big.Int) bool {
 	return x.Cmp(y) == 0
@@ -69,6 +114,21 @@ func Abs(a *big.Float) *big.Float {
 	return Zero().Abs(a)
 }
 
+// Neg flips the sign of the parameter Float
+func Neg(a *big.Float) *big.Float {
+	return a.Neg(a)
+}
+
+// Sign returns 1 for positive, -1 for negative and 0 for 0s
+func Sign(a *big.Float) int {
+	return a.Sign()
+}
+
+// Sqrt returns the square root of the parameter
+func Sqrt(a *big.Float) *big.Float {
+	return Root(a, 2)
+}
+
 // Add returns a + b
 func Add(a, b *big.Float) *big.Float {
 	return Zero().Add(a, b)
@@ -92,7 +152,7 @@ func Div(a, b *big.Float) *big.Float {
 // Mod returns a % b
 func Mod(a, b *big.Float) *big.Float {
 	q := Div(a, b)
-	i, _ := q.Int(nil)
+	i := Int(q)
 	fi := Zero().SetInt(i)
 	rem := Sub(a, Mul(b, fi))
 	return rem
