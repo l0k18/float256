@@ -157,3 +157,5 @@ func Mod(a, b *big.Float) *big.Float {
 	rem := Sub(a, Mul(b, fi))
 	return rem
 }
+
+// TODO: write codec to convert to and from 256 bit fixed point with zero padding and no sign
